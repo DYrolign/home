@@ -1,0 +1,30 @@
+span {
+    font-size: 24px;
+    padding: 6px;
+    height: 100%;
+    width: 100%;
+}
+
+.main {
+    border-radius: 16px;
+    background: #8AC007;
+    color: #ffffff;
+}
+
+.info {
+    border-radius: 16px;
+    background: #969696;
+    color: #ffffff;
+}
+
+.warn {
+    border-radius: 16px;
+    background: #ecff16;
+    color: #000000;
+}
+
+.forbid {
+    border-radius: 16px;
+    background: #ff1616;
+    color: #ffffff;
+}

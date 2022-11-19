@@ -1,0 +1,82 @@
+html {
+    cursor: url(/images/arrow.png), default !important;
+    background-size: cover;
+    user-select: none;
+}
+
+body {
+    background-color: white;
+    background: radial-gradient(200% 100% at bottom center, #ffff9c, #ff4479);
+    background: radial-gradient(220% 105% at top center, #1971ff, #cd20f4, #ff4479);
+    background-attachment: fixed;
+    overflow: auto;
+    color: azure;
+}
+
+div {
+    margin: auto;
+    padding: auto;
+    background-size: cover;
+    text-align: center;
+    height: auto;
+    width: 100%;
+    line-height: 170%;
+}
+
+.misc {
+    background: #3a3a3a5c;
+    color: #ffffff;
+    position: fixed;
+    height: auto;
+    width: auto;
+    font-size: 24px;
+    padding: 10px;
+    visibility: hidden;
+}
+
+.misc#tips {
+    width: 100%;
+}
+
+.intro {
+    font-size: 37px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+p#main:first-letter {
+    color: #f2ff00;
+    font-size: 64px;
+}
+
+.about {
+    font-size: 28px;
+    position: absolute;
+    left: 50%;
+    top: 82%;
+    transform: translate(-50%, 0);
+}
+
+a:link,
+a:visited {
+    color: #00f9fd;
+    text-decoration: none;
+}
+
+a:hover,
+a:active {
+    color: #004cff;
+    text-decoration: none;
+}
+
+a,
+input {
+    cursor: url(/images/arrow.png), default !important;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
