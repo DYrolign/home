@@ -1,5 +1,5 @@
 html {
-    cursor: url(/images/arrow.png), default !important;
+    /*cursor: url(/images/arrow.png), default !important;*/
     background-size: cover;
     user-select: none;
 }
@@ -72,9 +72,7 @@ a:active {
 }
 
 a,
-input {
-    cursor: url(/images/arrow.png), default !important;
-}
+input {}
 
 img {
     max-width: 100%;
