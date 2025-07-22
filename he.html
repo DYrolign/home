@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>辐射避难所风格房间 - 鼠标跟随效果</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+            padding: 20px;
+            width: 100%;
+            max-width: 1000px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            border: 1px solid #4a86e8;
+            box-shadow: 0 0 20px rgba(74, 134, 232, 0.3);
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            color: #ff9900;
+            text-shadow: 0 0 10px rgba(255, 153, 0, 0.7);
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #4a86e8;
+            margin-bottom: 15px;
+        }
+
+        .description {
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+            color: #b3b3b3;
+        }
+
+        .highlight {
+            color: #ff9900;
+            font-weight: bold;
+        }
+
+        .content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .instructions {
+            background: rgba(26, 26, 46, 0.8);
+            border: 1px solid #4a86e8;
+            border-radius: 10px;
+            padding: 25px;
+            max-width: 350px;
+            height: fit-content;
+            box-shadow: 0 0 15px rgba(74, 134, 232, 0.4);
+        }
+
+        .instructions h2 {
+            color: #ff9900;
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+        }
+
+        .instructions ul {
+            padding-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        .instructions li {
+            margin-bottom: 12px;
+            line-height: 1.5;
+        }
+
+        .tech-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .tech-item {
+            background: rgba(74, 134, 232, 0.2);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        #game-container {
+            position: relative;
+            width: 800px;
+            height: 500px;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+            border: 3px solid #ff9900;
+            background: #111;
+            cursor: none;
+        }
+
+        /* 所有图层共用样式 */
+        .room-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 1600px;
+            height: 1000px;
+            will-change: transform;
+        }
+
+        /* 背景层（墙壁/地板） */
+        #background-layer {
+            background:
+                linear-gradient(15deg, #2a1e17 25%, #3a2b21 25%),
+                linear-gradient(-15deg, #2a1e17 25%, #3a2b21 25%);
+            background-size: 100px 100px;
+            background-blend-mode: multiply;
+            transform: translate(0, 0);
+        }
+
+        /* 中间层（固定设备） */
+        #midground-layer {
+            background:
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" opacity="0.7"><rect x="50" y="50" width="100" height="100" fill="%23333" rx="10"/></svg>'),
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" opacity="0.5"><circle cx="150" cy="150" r="60" fill="%23444" /></svg>');
+            background-repeat: space;
+            background-position: 50px 100px, 300px 200px;
+            transform: translate(0, 0);
+        }
+
+        /* 前景层（可交互元素） */
+        #foreground-layer {
+            transform: translate(0, 0);
+        }
+
+        /* 居民元素 */
+        .dweller {
+            position: absolute;
+            width: 30px;
+            height: 60px;
+            border-radius: 5px 5px 15px 15px;
+            box-shadow: 0 0 10px currentColor;
+            display: flex;
+            justify-content: center;
+        }
+
+        .dweller::before {
+            content: "";
+            position: absolute;
+            top: -8px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: currentColor;
+        }
+
+        .dweller-1 {
+            background: #4a86e8;
+            color: #4a86e8;
+            left: 300px;
+            top: 200px;
+        }
+
+        .dweller-2 {
+            background: #e84a4a;
+            color: #e84a4a;
+            left: 500px;
+            top: 350px;
+        }
+
+        .dweller-3 {
+            background: #4ae86e;
+            color: #4ae86e;
+            left: 700px;
+            top: 150px;
+        }
+
+        .dweller-4 {
+            background: #e8d24a;
+            color: #e8d24a;
+            left: 900px;
+            top: 400px;
+        }
+
+        /* 设备元素 */
+        .equipment {
+            position: absolute;
+            background: #555;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #ff9900;
+            font-size: 24px;
+        }
+
+        .generator {
+            width: 120px;
+            height: 100px;
+            left: 400px;
+            top: 300px;
+        }
+
+        .water-purifier {
+            width: 100px;
+            height: 150px;
+            left: 650px;
+            top: 250px;
+        }
+
+        .diner {
+            width: 150px;
+            height: 80px;
+            left: 850px;
+            top: 350px;
+        }
+
+        /* 自定义鼠标光标 */
+        #custom-cursor {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border: 2px solid #ff9900;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1000;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 10px #ff9900;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #custom-cursor::after {
+            content: "";
+            width: 6px;
+            height: 6px;
+            background: #ff9900;
+            border-radius: 50%;
+        }
+
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            color: #888;
+            font-size: 0.9rem;
+            padding: 20px;
+        }
+
+        @media (max-width: 900px) {
+            .content {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            #game-container {
+                width: 95%;
+                height: 400px;
+            }
+
+            .instructions {
+                max-width: 95%;
+            }
+        }
+
+        @media (max-width: 500px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            #game-container {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>辐射避难所房间设计</h1>
+        <p class="subtitle">鼠标跟随视差效果实现</p>
+        <p class="description">此演示展示了如何在平面游戏中实现类似《辐射避难所》的"移动摄像头查看房间全貌"效果。只需<span
+                class="highlight">移动鼠标即可自动控制视角</span>，探索避难所房间的各个角落。</p>
+    </div>
+
+    <div class="content">
+        <div class="instructions">
+            <h2>实现原理</h2>
+            <ul>
+                <li><span class="highlight">多层视差滚动</span> - 背景、中景、前景以不同速度移动</li>
+                <li><span class="highlight">鼠标位置跟踪</span> - 根据鼠标位置自动计算视角偏移</li>
+                <li><span class="highlight">超大画布渲染</span> - 实际渲染区域大于可视区域</li>
+                <li><span class="highlight">边界约束</span> - 确保视角不会移出房间边界</li>
+                <li><span class="highlight">性能优化</span> - 使用CSS will-change和transform</li>
+            </ul>
+
+            <h2>操作说明</h2>
+            <p>只需在房间区域内<span class="highlight">移动鼠标</span>即可控制视角。鼠标位置越靠近边缘，视角移动幅度越大。</p>
+
+            <div class="tech-list">
+                <div class="tech-item">HTML5</div>
+                <div class="tech-item">CSS3</div>
+                <div class="tech-item">JavaScript</div>
+                <div class="tech-item">视差效果</div>
+                <div class="tech-item">响应式设计</div>
+            </div>
+        </div>
+
+        <div id="game-container">
+            <div id="background-layer" class="room-layer"></div>
+            <div id="midground-layer" class="room-layer">
+                <div class="equipment generator">⚡</div>
+                <div class="equipment water-purifier">💧</div>
+                <div class="equipment diner">🍔</div>
+            </div>
+            <div id="foreground-layer" class="room-layer">
+                <div class="dweller dweller-1"></div>
+                <div class="dweller dweller-2"></div>
+                <div class="dweller dweller-3"></div>
+                <div class="dweller dweller-4"></div>
+            </div>
+            <div id="custom-cursor"></div>
+        </div>
+    </div>
+
+    <div class="footer">
+        辐射避难所风格房间效果演示 | 使用纯HTML、CSS和JavaScript实现
+    </div>
+
+    <script>
+        // 获取DOM元素
+        const container = document.getElementById('game-container');
+        const bgLayer = document.getElementById('background-layer');
+        const mgLayer = document.getElementById('midground-layer');
+        const fgLayer = document.getElementById('foreground-layer');
+        const customCursor = document.getElementById('custom-cursor');
+
+        // 视差系数 (背景移动慢，前景移动快)
+        const parallaxFactors = {
+            background: 0.3,
+            midground: 0.7,
+            foreground: 1.0
+        };
+
+        // 初始位置和状态
+        let scrollX = 0;
+        let scrollY = 0;
+        let targetX = 0;
+        let targetY = 0;
+        let isActive = true;
+
+        // 计算移动边界（确保不会移出房间）
+        const maxScrollX = bgLayer.offsetWidth - container.offsetWidth;
+        const maxScrollY = bgLayer.offsetHeight - container.offsetHeight;
+
+        // 更新所有图层位置
+        function updateLayers() {
+            // 应用视差效果
+            bgLayer.style.transform = `translate(${-scrollX * parallaxFactors.background}px, ${-scrollY * parallaxFactors.background}px)`;
+            mgLayer.style.transform = `translate(${-scrollX * parallaxFactors.midground}px, ${-scrollY * parallaxFactors.midground}px)`;
+            fgLayer.style.transform = `translate(${-scrollX * parallaxFactors.foreground}px, ${-scrollY * parallaxFactors.foreground}px)`;
+        }
+
+        // 鼠标移动事件处理
+        container.addEventListener('mousemove', (e) => {
+            if (!isActive) return;
+
+            // 计算鼠标在容器内的相对位置（0到1）
+            const rect = container.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            // 计算目标滚动位置（鼠标靠近边缘时移动更多）
+            targetX = (x / container.offsetWidth) * maxScrollX;
+            targetY = (y / container.offsetHeight) * maxScrollY;
+
+            // 更新自定义光标位置
+            customCursor.style.left = `${e.clientX}px`;
+            customCursor.style.top = `${e.clientY}px`;
+        });
+
+        // 平滑动画函数
+        function animate() {
+            // 使用缓动效果平滑过渡
+            scrollX += (targetX - scrollX) * 0.1;
+            scrollY += (targetY - scrollY) * 0.1;
+
+            // 边界约束
+            scrollX = Math.max(0, Math.min(scrollX, maxScrollX));
+            scrollY = Math.max(0, Math.min(scrollY, maxScrollY));
+
+            updateLayers();
+            requestAnimationFrame(animate);
+        }
+
+        // 窗口激活状态检测
+        window.addEventListener('focus', () => {
+            isActive = true;
+            customCursor.style.display = 'block';
+        });
+
+        window.addEventListener('blur', () => {
+            isActive = false;
+        });
+
+        // 鼠标离开容器时逐渐回到中心
+        container.addEventListener('mouseleave', () => {
+            targetX = maxScrollX / 2;
+            targetY = maxScrollY / 2;
+        });
+
+        // 初始化
+        targetX = maxScrollX / 2;
+        targetY = maxScrollY / 2;
+        animate();
+
+        // 响应窗口大小变化
+        window.addEventListener('resize', () => {
+            // 重新计算边界
+            maxScrollX = bgLayer.offsetWidth - container.offsetWidth;
+            maxScrollY = bgLayer.offsetHeight - container.offsetHeight;
+
+            // 约束当前位置
+            scrollX = Math.max(0, Math.min(scrollX, maxScrollX));
+            scrollY = Math.max(0, Math.min(scrollY, maxScrollY));
+            targetX = Math.max(0, Math.min(targetX, maxScrollX));
+            targetY = Math.max(0, Math.min(targetY, maxScrollY));
+
+            updateLayers();
+        });
+    </script>
+</body>
+
+</html>

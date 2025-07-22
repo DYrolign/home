@@ -1,0 +1,43 @@
+#container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+    overflow: hidden;
+    touch-action: none;
+    background-size: cover;
+}
+
+.layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1600px;
+    /* 实际渲染宽度是可视区域的2倍 */
+    height: 1000px;
+    /* 实际渲染高度是可视区域的2倍 */
+    will-change: transform;
+    /* 优化性能 */
+}
+
+#background-layer {
+    background: radial-gradient(220% 105% at top center, #1971ff, #cd20f4, #ff4479);
+    background-size: 1600px 1000px;
+    background-blend-mode: multiply;
+    transform: translate(0, 0);
+}
+
+#midground-layer {
+    background: url('../images/bg.png');
+    background-repeat: space;
+    width: 3200px;
+    height: 2000px;
+    transform: translate(0, 0);
+}
+
+#foreground-layer {
+    transform: translate(0, 0);
+}

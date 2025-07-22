@@ -1,3 +1,11 @@
+@font-face {
+    font-family: 'HK4E';
+    src:
+        url('../fonts/hk4e_zh-cn.woff') format('woff'),
+        url('../fonts/hk4e_zh-cn.ttf') format('truetype');
+    font-display: swap;
+}
+
 html {
     /*cursor: url(/images/arrow.png), default !important;*/
     background-size: cover;
@@ -5,12 +13,13 @@ html {
 }
 
 body {
-    background-color: white;
+    background-color: skyblue;
     background: radial-gradient(200% 100% at bottom center, #ffff9c, #ff4479);
     background: radial-gradient(220% 105% at top center, #1971ff, #cd20f4, #ff4479);
     background-attachment: fixed;
     overflow: auto;
     color: azure;
+    font-family: 'HK4E', sans-serif;
 }
 
 div {
@@ -53,9 +62,9 @@ p#main:first-letter {
 
 .about {
     font-size: 28px;
-    position: absolute;
+    position: fixed;
     left: 50%;
-    top: 82%;
+    bottom: 2%;
     transform: translate(-50%, 0);
 }
 
