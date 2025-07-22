@@ -14,8 +14,6 @@ html {
 
 body {
     background-color: skyblue;
-    background: radial-gradient(200% 100% at bottom center, #ffff9c, #ff4479);
-    background: radial-gradient(220% 105% at top center, #1971ff, #cd20f4, #ff4479);
     background-attachment: fixed;
     overflow: auto;
     color: azure;

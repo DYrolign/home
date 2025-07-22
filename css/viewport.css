@@ -25,13 +25,14 @@
 
 #background-layer {
     background: radial-gradient(220% 105% at top center, #1971ff, #cd20f4, #ff4479);
+    background-image: url('https://s21.ax1x.com/2025/07/22/pVG9qQ1.png');
     background-size: 1600px 1000px;
     background-blend-mode: multiply;
     transform: translate(0, 0);
 }
 
 #midground-layer {
-    background: url('../images/bg.png');
+    /*background: url('../images/bg1.png');*/
     background-repeat: space;
     width: 3200px;
     height: 2000px;
