@@ -51,12 +51,17 @@ div {
     transform: translate(-50%, -50%);
 }
 
+p#main:first-letter {
+    color: #f2ff00;
+    font-size: 64px;
+}
+
 .lowerright {
     font-size: 17px;
     position: fixed;
     text-align: end;
     right: 8px;
-    bottom: -20px;
+    bottom: 0px;
 }
 
 .lowerleft {
@@ -64,12 +69,11 @@ div {
     position: fixed;
     text-align: initial;
     left: 8px;
-    bottom: -20px;
+    bottom: 0px;
 }
 
-p#main:first-letter {
-    color: #f2ff00;
-    font-size: 64px;
+p#lower {
+    height: 10px;
 }
 
 .about {
