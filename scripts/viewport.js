@@ -70,7 +70,7 @@ window.addEventListener('blur', () => {
 });
 
 // 鼠标离开容器时逐渐回到中心
-container.addEventListener('mouseleave', () => {
+window.addEventListener('mouseleave', () => {
     targetX = maxScrollX / 2;
     targetY = maxScrollY / 2;
 });
