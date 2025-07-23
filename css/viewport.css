@@ -24,7 +24,7 @@
 }
 
 #background-layer {
-    /*background: url(../images/background.png);*/
+    background: url(../images/background.png);
     background-image: url('https://s21.ax1x.com/2025/07/23/pVGUgLn.png');
     background-size: 1600px 1000px;
     background-blend-mode: multiply;
@@ -32,7 +32,7 @@
 }
 
 #sun-layer {
-    /*background: url(../images/sun.png);*/
+    background: url(../images/sun.png);
     background-image: url('https://s21.ax1x.com/2025/07/23/pVGU6Mj.png');
     scale: 0.8;
     top: -100px;
@@ -43,8 +43,7 @@
 }
 
 #midground-layer {
-    /*background-image: url('https://s21.ax1x.com/2025/07/22/pVG9qQ1.png');*/
-    /*background: url(../images/midground.png);*/
+    background: url(../images/midground.png);
     background-image: url('https://s21.ax1x.com/2025/07/23/pVGUcss.png');
     background-repeat: space;
     top: 0;
@@ -55,7 +54,7 @@
 }
 
 #foreground-layer {
-    /*background: url(../images/foreground.png);*/
+    background: url(../images/foreground.png);
     background-image: url('https://s21.ax1x.com/2025/07/23/pVGURZq.png');
     width: 2400px;
     height: 1200px;
@@ -65,7 +64,7 @@
 }
 
 #clouds-layer {
-    /*background: url(../images/clouds.png);*/
+    background: url(../images/clouds.png);
     background-image: url('https://s21.ax1x.com/2025/07/23/pVGUWd0.png');
     scale: 0.8;
     width: 2400px;
