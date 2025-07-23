@@ -1,14 +1,18 @@
 // 获取DOM元素
 const container = document.getElementById('container');
 const bgLayer = document.getElementById('background-layer');
+const sunLayer = document.getElementById('sun-layer');
 const mgLayer = document.getElementById('midground-layer');
 const fgLayer = document.getElementById('foreground-layer');
+const cldLayer = document.getElementById('clouds-layer');
 
 // 视差系数 (背景移动慢，前景移动快)
 const parallaxFactors = {
-    background: 0.3,
-    midground: 0.8,
-    foreground: 1.0
+    background1: 0.9,
+    background2: 0.01,
+    midground: 0.3,
+    foreground1: 1.0,
+    foreground2: 0.7
 };
 
 // 初始位置和状态
@@ -26,9 +30,11 @@ const maxScrollY = bgLayer.offsetHeight - container.offsetHeight;
 // 更新所有图层位置
 function updateLayers() {
     // 应用视差效果
-    bgLayer.style.transform = `translate(${-scrollX * parallaxFactors.background}px, ${-scrollY * parallaxFactors.background}px)`;
-    mgLayer.style.transform = `translate(${-scrollX * parallaxFactors.midground * 6}px, ${-scrollY * parallaxFactors.midground}px)`;
-    fgLayer.style.transform = `translate(${-scrollX * parallaxFactors.foreground * 6}px, ${-scrollY * parallaxFactors.foreground}px)`;
+    bgLayer.style.transform = `translate(${-scrollX * parallaxFactors.background1}px, ${-scrollY * parallaxFactors.background1}px)`;
+    sunLayer.style.transform = `translate(${-scrollX * parallaxFactors.background2}px, ${-scrollY * parallaxFactors.background2}px)`;
+    mgLayer.style.transform = `translate(${-scrollX * parallaxFactors.midground}px, ${-scrollY * parallaxFactors.midground}px)`;
+    fgLayer.style.transform = `translate(${-scrollX * parallaxFactors.foreground1}px, ${-scrollY * parallaxFactors.foreground1}px)`;
+    cldLayer.style.transform = `translate(${-scrollX * parallaxFactors.foreground2}px, ${-scrollY * parallaxFactors.foreground2}px)`;
 }
 
 // 鼠标移动事件处理
@@ -62,7 +68,6 @@ function animate() {
 // 窗口激活状态检测
 window.addEventListener('focus', () => {
     isActive = true;
-    customCursor.style.display = 'block';
 });
 
 window.addEventListener('blur', () => {
@@ -70,7 +75,7 @@ window.addEventListener('blur', () => {
 });
 
 // 鼠标离开容器时逐渐回到中心
-window.addEventListener('mouseleave', () => {
+container.addEventListener('mouseleave', () => {
     targetX = maxScrollX / 2;
     targetY = maxScrollY / 2;
 });

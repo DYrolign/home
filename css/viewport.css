@@ -24,7 +24,19 @@
 }
 
 #background-layer {
-    background: url(../images/moon-background.png);
+    /*background: url(../images/background.png);*/
+    background-image: url('https://s21.ax1x.com/2025/07/23/pVGUgLn.png');
+    background-size: 1600px 1000px;
+    background-blend-mode: multiply;
+    transform: translate(0, 0);
+}
+
+#sun-layer {
+    /*background: url(../images/sun.png);*/
+    background-image: url('https://s21.ax1x.com/2025/07/23/pVGU6Mj.png');
+    scale: 0.8;
+    top: -100px;
+    left: -180px;
     background-size: 1600px 1000px;
     background-blend-mode: multiply;
     transform: translate(0, 0);
@@ -32,14 +44,33 @@
 
 #midground-layer {
     /*background-image: url('https://s21.ax1x.com/2025/07/22/pVG9qQ1.png');*/
-    background: url(../images/moon-midground.png);
+    /*background: url(../images/midground.png);*/
+    background-image: url('https://s21.ax1x.com/2025/07/23/pVGUcss.png');
     background-repeat: space;
-    width: 2000px;
+    top: 0;
+    left: -550px;
+    width: 2400px;
     height: 1200px;
     transform: translate(0, 0);
 }
 
 #foreground-layer {
-    background: url(../images/moon-foreground.png);
+    /*background: url(../images/foreground.png);*/
+    background-image: url('https://s21.ax1x.com/2025/07/23/pVGURZq.png');
+    width: 2400px;
+    height: 1200px;
+    top: 100px;
+    left: -100px;
+    transform: translate(0, 0);
+}
+
+#clouds-layer {
+    /*background: url(../images/clouds.png);*/
+    background-image: url('https://s21.ax1x.com/2025/07/23/pVGUWd0.png');
+    scale: 0.8;
+    width: 2400px;
+    height: 1000px;
+    top: -280px;
+    left: -600px;
     transform: translate(0, 0);
 }
